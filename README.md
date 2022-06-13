@@ -1,6 +1,6 @@
 # DEGRN
 
-**DEGRN** (**D**eep-learning **E**xpression of **G**ene **R**egulatory **N**etwork) was a nenural model which was built by training on the expression data of bulk RNA-seq and scRNA-seq in plants. DEGRN obtained 3,053,363 high-quality interactions composited with 1,430 TF genes and 13,739 non-TF genes in *Arabidopsis thaliana*. Based on these interactions, users can infer the gene functions for each TF, and construct the network for a specific function.
+**DEGRN** (**D**eep-learning on **E**xpression for **G**ene **R**egulatory **N**etwork) was a nenural model which was built by training on the expression data of bulk RNA-seq and scRNA-seq in plants. DEGRN obtained 3,053,363 high-quality interactions composited with 1,430 TF genes and 13,739 non-TF genes in *Arabidopsis thaliana*. Based on these interactions, users can infer the gene functions for each TF, and construct the network for a specific function.
 
 Along with DEGRN, users can do:
 1. seek on a interested functions (or BPs) for more associated TF genes;
@@ -16,7 +16,7 @@ Along with DEGRN, users can do:
 ---
 ## Install 
 - This model was written in [Python](https://www.python.org/). So, you need to install [Python](https://www.python.org/). The modules of python include ```keras```, ```numpy```, ```matplotlib```, and ```pandas```. 
-- If you need to plot the network, the [R](https://www.r-project.org/) need to be installed. 
+- If you need to plot the network, the [R](https://www.r-project.org/) need to be installed. The R packages ```igraph```, ```dplyr```, ```data.table``` are also required. 
 
 <img src="./data/model_construction.png" width="60%" align="center">
 
@@ -119,7 +119,29 @@ Here is an example of network which was constructed by ```ATMYB15```.
 <img src="./examples/gene_example.png" width="60%" align="center">
 
 ---
-#### 3. Predict the interested TFs and targets based on DEGRN
 
+### 3. Predict the interested TFs and targets based on DEGRN
+
+The Python script ```predict_tf_target_file_from_DEGRN.py``` is used to predict the interactions for users. Users can make a predict input file, includint three columns: ID, tf, target.
+
+For example, the file ```examples/examples.tf.target.txt``` list 6 paris of tf and target. 
+
+<img src="./examples/example_input.jpg" width="60%" align="center">
+
+Thus, open a command line window or shell terminal, navigate to the home directory of DEGRN pcakage, and type in the following command:
+
+```bash
+# bash code in Linux or CMD code in Window
+python predict_tf_target_file_from_DEGRN.py examples/scRNA-seq.tpm.txt examples/bulk_RNA-seq.tpm.txt models/whole_data_model.h5 examples/examples.tf.target.txt examples/predict-result.txt
+```
+
+The resulted file ```examples/predict-results.txt``` are as followed:
+
+<img src="./examples/example_out.jpg" width="60%" align="center">
+
+- The ```1th``` column was index, which is same as the input file
+- The ```2th``` column was TF ID, which is same as the input file
+- The ```3th``` column was target ID, which is same as the input file
+- The ```4th``` column was score predicted by DEGRN
 
 
